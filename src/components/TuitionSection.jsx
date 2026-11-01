@@ -14,7 +14,7 @@ export default function TuitionSection ({ tuition, financing }) {
           <Wallet className="size-5 text-primary" aria-hidden="true" />
           Arancel y Financiamiento
         </h2>
-        <p className="text-sm text-muted-foreground">Valores referenciales para el año académico 2027.</p>
+        <p className="text-sm text-muted-foreground">Valores referenciales para el proceso de admisión 2027.</p>
       </div>
 
       <dl className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -23,17 +23,17 @@ export default function TuitionSection ({ tuition, financing }) {
           <dd className="text-2xl font-bold">{formatCLP(tuition.annual)}</dd>
         </div>
         <div className="flex flex-col gap-1 rounded-lg bg-muted p-4">
-          <dt className="text-sm text-muted-foreground">Matrícula</dt>
+          <dt className="text-sm text-muted-foreground">Matrícula anual</dt>
           <dd className="text-2xl font-bold text-foreground">{formatCLP(tuition.enrollment)}</dd>
         </div>
         <div className="flex flex-col gap-1 rounded-lg bg-muted p-4">
-          <dt className="text-sm text-muted-foreground">10 cuotas de</dt>
+          <dt className="text-sm text-muted-foreground">10 cuotas mensuales de</dt>
           <dd className="text-2xl font-bold text-foreground">{formatCLP(monthly)}</dd>
         </div>
       </dl>
 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-semibold text-foreground">Opciones de financiamiento</h3>
+        <h3 className="text-lg font-semibold text-foreground">Becas, beneficios y gratuidad disponibles</h3>
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {financing.map((option) => (
             <li key={option.name} className="flex gap-3 rounded-lg border border-border p-4">
@@ -46,15 +46,6 @@ export default function TuitionSection ({ tuition, financing }) {
           ))}
         </ul>
       </div>
-
-      <a
-        href="https://www.usm.cl/admision/"
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-accent px-5 text-base font-semibold text-accent-foreground hover:opacity-90 sm:w-fit"
-      >
-        Simular mi financiamiento
-      </a>
     </section>
   )
 }

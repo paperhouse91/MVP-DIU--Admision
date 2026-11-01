@@ -10,11 +10,25 @@ export default function App () {
   const [query, setQuery] = useState('')
 
   const filteredCareers = useMemo(() => {
-    const term = normalize(query.trim())
-    if (!term) return careers
-    return careers.filter((career) =>
-      normalize(`${career.name} ${career.area} ${career.campus}`).includes(term)
-    )
+    const rawTerm = normalize(query.trim())
+    if (!rawTerm) return careers
+
+    const tokens = rawTerm.split(/\s+/).filter(Boolean)
+
+    return careers.filter((career) => {
+      const searchableText = normalize(
+        [
+          career.name,
+          career.area,
+          career.regime || '',
+          career.campus,
+          career.degree,
+          career.summary,
+          ...(career.synonyms || [])
+        ].join(' ')
+      )
+      return tokens.every((token) => searchableText.includes(token))
+    })
   }, [query])
 
   const selectedCareer = careers.find((career) => career.id === selectedId)
