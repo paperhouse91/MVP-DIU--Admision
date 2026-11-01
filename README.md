@@ -1,35 +1,38 @@
-# frontend-sample-app
+# MVP Portal de Admisión USM
 
-Basic Frontend Development Environment to start an app with Webpack
+MVP interactivo mobile-first en **React + Tailwind CSS** (con Vite) e íconos de `lucide-react`.
+Las vistas (Home y Detalle de Carrera) se controlan con estado de React, sin librerías de enrutamiento.
 
-This repo includes `Webpack` to start an environment to build frontend views using `React`.
+### Requisitos
 
-### Requirements
+- Node >= 18
 
-- Node >= 16.13.1
-- npm >= 8.1.2
-
-### Quick start
-
-Install dependences
+### Inicio rápido
 
 ```
 npm install
-```
-
-Launch environment
-
-```
 npm run dev
 ```
 
-Now you can open http://localhost:5050
+Build de producción: `npm run build` (genera `dist/`).
 
-### Packages included
+### Estructura
 
-- [Webpack](https://webpack.js.org/)
-- [React Router](https://reactrouter.com/en/main)
-
-### About stylesheets
-
-- Sample stylesheets were written using the [BEM](https://getbem.com/) structure
+```
+src/
+├── index.jsx              # Punto de entrada
+├── App.jsx                # Estado: carrera seleccionada + búsqueda
+├── views/
+│   ├── HomeView.jsx       # Banner, buscador y grilla de carreras
+│   └── CareerDetailView.jsx
+├── components/
+│   ├── SiteHeader.jsx
+│   ├── AdmissionBanner.jsx
+│   ├── CareerSearch.jsx
+│   ├── CareerCard.jsx
+│   ├── CurriculumSection.jsx
+│   └── TuitionSection.jsx
+├── data/careers.js        # Datos simulados
+├── utils/format.js        # formatCLP, normalize
+└── styles/index.css       # Tailwind + tokens de color
+```
