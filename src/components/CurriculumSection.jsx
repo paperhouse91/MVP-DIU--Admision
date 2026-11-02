@@ -2,41 +2,11 @@ import { useState } from 'react'
 import { Check, Download, Layers } from 'lucide-react'
 import { downloadCurriculumPdf } from '../utils/pdf'
 
-const CYCLE_META = {
-  'plan-comun': {
-    label: 'Plan Común',
-    badgeClass: 'bg-primary/10 text-primary border-primary/20',
-    headerClass: 'border-l-4 border-l-primary'
-  },
-  especialidad: {
-    label: 'Especialidad',
-    badgeClass: 'bg-amber-500/15 text-amber-900 border-amber-500/30',
-    headerClass: 'border-l-4 border-l-accent'
-  },
-  titulacion: {
-    label: 'Titulación',
-    badgeClass: 'bg-emerald-600/12 text-emerald-900 border-emerald-600/25',
-    headerClass: 'border-l-4 border-l-emerald-600'
-  }
-}
-
-const FILTERS = [
-  { id: 'all', label: 'Todos los semestres' },
-  { id: 'plan-comun', label: 'Plan Común (I–IV)' },
-  { id: 'especialidad', label: 'Especialidad (V–VIII)' },
-  { id: 'titulacion', label: 'Titulación (IX+)' }
-]
-
 export default function CurriculumSection ({ career }) {
-  const [activeCycle, setActiveCycle] = useState('all')
   const [downloaded, setDownloaded] = useState(false)
 
   const curriculum = career.curriculum || []
   const totalCourses = curriculum.reduce((acc, sem) => acc + sem.courses.length, 0)
-
-  const visibleSemesters = activeCycle === 'all'
-    ? curriculum
-    : curriculum.filter((sem) => sem.cycle === activeCycle)
 
   const handleDownloadPdf = () => {
     downloadCurriculumPdf(career)
@@ -78,58 +48,30 @@ export default function CurriculumSection ({ career }) {
         </button>
       </div>
 
-      {/* Filtro rápido por ciclo formativo (Lean UX: escaneo rápido sin ocultar contenido) */}
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar semestres por etapa formativa">
-        {FILTERS.map((filter) => {
-          const isActive = activeCycle === filter.id
-          return (
-            <button
-              key={filter.id}
-              type="button"
-              onClick={() => setActiveCycle(filter.id)}
-              aria-pressed={isActive}
-              className={`min-h-10 cursor-pointer rounded-lg border px-3.5 py-1.5 text-sm font-semibold transition-colors ${
-                isActive
-                  ? 'border-primary bg-primary text-primary-foreground shadow-xs'
-                  : 'border-border bg-muted/60 text-foreground hover:bg-muted'
-              }`}
-            >
-              {filter.label}
-            </button>
-          )
-        })}
-      </div>
-
-      {/* Grilla de semestres siempre visible */}
+      {/* Grilla completa y limpia de semestres */}
       <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {visibleSemesters.map((sem) => {
-          const meta = CYCLE_META[sem.cycle] || CYCLE_META['plan-comun']
-          return (
-            <li
-              key={sem.semester}
-              className={`flex flex-col gap-3 rounded-xl border border-border bg-muted/35 p-4 shadow-2xs ${meta.headerClass}`}
-            >
-              <div className="flex items-center justify-between gap-2 border-b border-border/80 pb-2.5">
-                <span className="text-base font-bold text-foreground">{sem.semester}</span>
-                <span className={`rounded-md border px-2 py-0.5 text-xs font-semibold ${meta.badgeClass}`}>
-                  {meta.label}
-                </span>
-              </div>
+        {curriculum.map((sem) => (
+          <li
+            key={sem.semester}
+            className="flex flex-col gap-3 rounded-xl border border-border bg-muted/35 p-4 shadow-2xs"
+          >
+            <div className="border-b border-border/80 pb-2.5">
+              <span className="text-base font-bold text-foreground">{sem.semester}</span>
+            </div>
 
-              <ul className="flex flex-col gap-1.5">
-                {sem.courses.map((course) => (
-                  <li
-                    key={course}
-                    className="flex items-start gap-2 rounded-md bg-card px-2.5 py-1.5 text-sm font-medium text-foreground shadow-2xs border border-border/60"
-                  >
-                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
-                    <span className="leading-snug">{course.trim()}</span>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          )
-        })}
+            <ul className="flex flex-col gap-1.5">
+              {sem.courses.map((course) => (
+                <li
+                  key={course}
+                  className="flex items-start gap-2 rounded-md border border-border/60 bg-card px-2.5 py-1.5 text-sm font-medium text-foreground shadow-2xs"
+                >
+                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                  <span className="leading-snug">{course.trim()}</span>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
       </ol>
     </section>
   )
