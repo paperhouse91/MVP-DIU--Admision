@@ -1,3 +1,8 @@
+# Integrantes
+
+Bastián Ríos  rol: 202351551-5
+Elismar Suárez rol: 202304535-7
+
 # MVP Portal de Admisión USM
 
 MVP interactivo mobile-first en **React + Tailwind CSS** (con Vite) e íconos de `lucide-react`.
@@ -14,7 +19,7 @@ npm install
 npm run dev
 ```
 
-Build de producción: `npm run build` (genera `dist/`).
+click en control y la dirección localhost que aparece en terminal
 
 ### Estructura
 
